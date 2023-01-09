@@ -3,10 +3,11 @@ import {tokenConfig} from './authAction';
 import { returnErrors } from "./errorAction";
 import {USER_LOADING ,GET_USERS,EDIT_USER } from './types'
 import {push} from 'connected-react-router'
+const url = "https://fast-lower.onrender.com"
 
 export const getUsers =()=>(dispatch,getState)=>{
         dispatch(UserIsLoading());
-        axios.get('/api/user/getUsers',tokenConfig(getState)).then(res=>{
+        axios.get(`${url}/api/user/getUsers`,tokenConfig(getState)).then(res=>{
             dispatch({
                 type:GET_USERS,
                 payload:res.data,

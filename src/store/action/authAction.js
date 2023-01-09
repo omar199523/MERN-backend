@@ -2,7 +2,7 @@ import axios from 'axios';
 import {returnErrors} from './errorAction'
 import {USER_LOADING ,USER_LOADED, AUTH_ERROR,LOGIN_SUCCESS ,REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT_SUCCESS, LOGIN_FAIL } from './types'
 import {push} from 'connected-react-router'
-
+const url = "https://fast-lower.onrender.com"
 
 // check token & load user
 export const loadUser = ()=> (dispatch,getState)=>{
@@ -10,7 +10,7 @@ export const loadUser = ()=> (dispatch,getState)=>{
     // user loading
     dispatch({type:USER_LOADING});
     // requst
-    axios.get("/api/auth/user",tokenConfig(getState))
+    axios.get(`${url}/api/auth/user`,tokenConfig(getState))
     .then(res =>dispatch({
         type:USER_LOADED,
         payload:res.data
@@ -35,7 +35,7 @@ export const register = ({name,email,userAddress,password}) => (dispatch) =>{
 
     const body = JSON.stringify({name,email,userAddress,password})
 
-    axios.post('/api/user',body,config)
+    axios.post(`${url}/api/user`,body,config)
         .then(res =>dispatch([
             dispatch(push('/login')),
             {
@@ -67,7 +67,7 @@ export const login =({email,password})=>dispatch=>{
 
     const body = JSON.stringify({email,password})
 
-    axios.post('/api/auth',body,config)
+    axios.post(`${url}/api/auth`,body,config)
         .then(res =>
             [dispatch(
                 {

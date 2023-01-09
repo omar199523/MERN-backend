@@ -2,11 +2,11 @@ import { GET_PERSON ,ADD_PERSON,DELET_PERSON ,PERSON_LOADING,PRESENT_PERSON,EDIT
 import {tokenConfig} from './authAction';
 import { returnErrors } from "./errorAction";
 import axios from 'axios'
-
+const url = "https://fast-lower.onrender.com"
 export const getPersons =(userName,userId)=>(dispatch,getState)=>{
     dispatch(personIsLoading());
     if(userName==="Admin"){
-        axios.get('/api/persons/',tokenConfig(getState)).then(res=>{
+        axios.get(`${url}/api/persons/`,tokenConfig(getState)).then(res=>{
             dispatch({
                 type:GET_PERSON,
                 payload:res.data,
@@ -15,7 +15,7 @@ export const getPersons =(userName,userId)=>(dispatch,getState)=>{
              dispatch(returnErrors( err.response.data.msg , err.response.status));
         })
     }else{
-        axios.get(`/api/persons/myData/${userId}`,tokenConfig(getState)).then(res=>{
+        axios.get(`${url}/api/persons/myData/${userId}`,tokenConfig(getState)).then(res=>{
             dispatch({
                 type:GET_PERSON,
                 payload:res.data,
@@ -30,7 +30,7 @@ export const addPerson =(person)=>(dispatch,getState)=>{
     console.log(person)
     // Request body
     const body = JSON.stringify({...person})
-    axios.post('/api/persons/add/',body,tokenConfig(getState))
+    axios.post(`${url}/api/persons/add/`,body,tokenConfig(getState))
         .then(res =>dispatch(
             {
             type:ADD_PERSON,
@@ -42,7 +42,7 @@ export const addPerson =(person)=>(dispatch,getState)=>{
 }
 export const deletPerson =(id)=>(dispatch,getState)=>{
     dispatch(personIsLoading());
-    axios.delete(`/api/persons/delete/${id}`,tokenConfig(getState))
+    axios.delete(`${url}/api/persons/delete/${id}`,tokenConfig(getState))
     .then(res=>{
         dispatch({
             type:DELET_PERSON,
@@ -75,7 +75,7 @@ export const editPerson =(parson)=> (dispatch,getState)=>{
     
     // Request body
     const body = JSON.stringify({...parson})
-    axios.post('/api/persons/edit',body,tokenConfig(getState))
+    axios.post(`${url}/api/persons/edit`,body,tokenConfig(getState))
         .then(res =>dispatch(
             {
             type:ADD_PERSON,
